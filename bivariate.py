@@ -56,5 +56,5 @@ def Bivariate(v_matrix: np.matrix, x: np.double, y: np.double):
     z = 0
     for r in range(len(v_matrix)):
         for c in range(len(v_matrix)):
-            z += v_matrix[r][c]*(x**r)*(y**c)
+            z += v_matrix[r,c]*(x**r)*(y**c)
     return z
