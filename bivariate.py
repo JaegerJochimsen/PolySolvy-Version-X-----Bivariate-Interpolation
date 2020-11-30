@@ -13,18 +13,19 @@ coefficients contained in the matrix with the appropriate (x^n)(y^n) terms to ou
 for a given x and y value. Specific procedure is included in function docstring.
 """
 
-import vmond
+#import vmond
 import numpy as np
-
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 # ----------------------------------- #
 # Get a list of points to interpolate #
 # ----------------------------------- #
 # FIXME: an input loop to accept points? or just define as global var?
-X = []
-Y = []
-Z = []
-VMATRIX = vmond.Vandermonde(X, Y, Z)      # this is a numpy matrix
+# X = []
+# Y = []
+# Z = []
+# VMATRIX = vmond.Vandermonde(X, Y, Z)      # this is a numpy matrix
 
 def Bivariate(v_matrix: np.matrix, x: np.double, y: np.double):
     """
@@ -43,7 +44,7 @@ def Bivariate(v_matrix: np.matrix, x: np.double, y: np.double):
     # [[1, 2],        # 1 is element (0,0), 2 is element (0,1), 4 is element (1,1), etc.
     # [3, 4]]
     Ex/
-    >>> v_matrix = np.matrix([[1,2], [3,4]])
+    >>> v_matrix = [[1,2], [3,4]]
 
     >>> Bivariate(v_matrix, 1, 1)
     10
@@ -58,3 +59,29 @@ def Bivariate(v_matrix: np.matrix, x: np.double, y: np.double):
         for c in range(len(v_matrix)):
             z += v_matrix[r,c]*(x**r)*(y**c)
     return z
+
+
+def Graph_Bivariate(vmatrix: np.matrix, x: np.array, y:np.array):
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    z = []
+
+    # Create the array of z values based off of constants in vmatrix and x and y vals
+    for index in range(len(x)):
+        z.append(Bivariate(vmatrix, np.double(x[index]),np.double(y[index])))
+    z = np.array(z)
+
+    #graph surface via trisurf in blue and overlay points in red
+    ax.plot_trisurf(x,y,z,linewidth=0, triangles='triangles')
+    ax.scatter(x,y,z, c='red')
+
+
+# ------------------- #
+#   A Neat Example    #
+# ------------------- #
+vm = np.matrix([[0.97500,-5.27500,5.95000],[ -3.92500, 19.82500, -21.55000], [3.40000, -14.70000, 18.50000]])    
+xs = np.array([1,1,1,2,2,2,3,3,3])
+ys = np.array([1,2,3,1,2,3,1,2,3])
+
+Graph_Bivariate(vm, xs, ys)
+
