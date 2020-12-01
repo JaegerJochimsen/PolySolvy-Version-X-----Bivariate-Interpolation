@@ -29,7 +29,7 @@ def Graph_Bivariate(vmatrix: np.matrix, x: np.array, y:np.array, original_z: np.
 # ------------------- #
 
 # coeffs calculated using gaussian elim
-v_matrix = np.matrix([[8/3,-7/3],[0,2/3]])   
+v_matrix = np.matrix([[8/3,-7/3],[0,2/3]])   # here our coeffs are in the order: [[c, y], [x,xy]] (I believe)
 
 # our original x's, y's, and z's
 xs = np.array([1,3,4,4]) 
