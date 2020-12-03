@@ -51,12 +51,15 @@ def Bivariate(v_matrix: np.matrix, x: np.double, y: np.double):
     >>> Bivariate(v_matrix, 3,4)
     66
     """
-    if len(v_matrix) == 0:
+    # avoid multiple calls to len()
+    length = len(vmatrix)
+    
+    if length == 0:
         return None
 
     z = 0
-    for r in range(len(v_matrix)):
-        for c in range(len(v_matrix)):
+    for r in range(length):
+        for c in range(length):
             z += v_matrix[r,c]*(x**r)*(y**c)
     return z
 
