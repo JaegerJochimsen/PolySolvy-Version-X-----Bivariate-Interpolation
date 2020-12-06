@@ -105,7 +105,7 @@ Graph_Bivariate(v_matrix, xs, ys, zs)
 
 # Here is a good example, uses evenly spaced points without repeats
 xs2 = np.array([1,2,3,4])
-ys2 = np.array([5,6,7])
+ys2 = np.array([5,6,7,8])
 zs2 = np.array([9,10,11,12])
 v_matrix = np.matrix([[-4,3],[-2,0]])
 Graph_Bivariate(v_matrix,xs2,ys2,zs2)
