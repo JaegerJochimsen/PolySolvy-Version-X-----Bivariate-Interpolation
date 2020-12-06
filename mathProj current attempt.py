@@ -2,6 +2,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+import random
 %matplotlib notebook
 
 superscript = str.maketrans("0123456789", "⁰¹²³⁴⁵⁶⁷⁸⁹")
@@ -198,11 +199,9 @@ def Bivariate(v_matrix: np.array, x: np.double, y: np.double):
     A function that iterates through a matrix of polynomial coefficients and multiplies them
     with the corresponding (x^n)(y^n) term. In this case, the index of the matrix (ith row, jth col)
     corresponds to the powers on x and y.
-
     param: v_matrix: a matrix of type np.matrix which contains the coefficients for the interpolating polynomial
     param: x: an x value of type np.double to be used in determining the z value at a point
     param: y: a y value of type np.double to be used in determining the z value at a point
-
     return: None if v_matrix is empty, otherwise return the polynomial evalueated at (x) and (y), return type should
             be np.double. This is evaluated as:
             v_matrix[0][0]*(x^0)*(y^0) + v_matrix[0][1]*(x^0)*(y^1) + ... + v_matrix[n-1][n-1]*(x^(n-1))*(y^(n-1))
@@ -211,7 +210,6 @@ def Bivariate(v_matrix: np.array, x: np.double, y: np.double):
     # [3, 4]]
     Ex/
     >>> v_matrix = [[1,2], [3,4]]
-
     >>> Bivariate(v_matrix, 1, 1)
     10
     >>> Bivariate(v_matrix, 3,4)
@@ -239,7 +237,6 @@ def Graph_Bivariate(vmatrix: np.matrix, orig_x: np.array, orig_y:np.array, orig_
     """
     A function which plots an original set of (x,y,z) points in a 3D space and overlays that graph with a graph
     of the function output by Bivariate() (this is the interpolating function for the original (x,y,z) points).
-
     param:  vmatrix: an np.matrix of coefficients of the terms of the interpolating polynomial. These coefficients
             are of the form:
             [[c,y,y^2,y^3,...........................y^(n//4)],         // powers of y increase horizontally, powers of x vertically.
@@ -249,16 +246,12 @@ def Graph_Bivariate(vmatrix: np.matrix, orig_x: np.array, orig_y:np.array, orig_
              ................................................]
              ................................................]
              [(x^(n//4)),(x^(n//4))y,..., (x^(n//4))(y^(n//4)]]
-
              These coefficients are used by Bivariate() to compute the corresponding z-value for a given (x,y) pair as
              specified by the interpolating polynomial.
-
     param: x: an np.array of the original x-coordinates that were interpolated.
     param: y: an np.array of the original y-coordinates that were interpolated.
     param: z: an np.array of the original z-cooordinates that were interpolated.
-
     return: outputs a graph plotted using Axes3D from mpl_toolkits.mplot3d
-
     libraries/files used:
     - bivariate.py
     - numpy
@@ -302,6 +295,17 @@ def Graph_Bivariate(vmatrix: np.matrix, orig_x: np.array, orig_y:np.array, orig_
     # convert to correct data type
     calculated_z = np.array(calculated_z, dtype=np.double)
     
+    # if an odd num of data points, add one to make even
+    if len(sample_x) % 2 != 0:
+        newX = random.randint(orig_x.min(), orig_x.max())
+        sample_x = np.append(sample_x, newX)
+        
+        newY = random.randint(orig_y.min(), orig_y.max())
+        sample_y = np.append(sample_y, newY)
+        
+        newZ = Bivariate(vmatrix, newX, newY)
+        calculated_z = np.append(calculated_z, newZ)
+    
     # reshape the data for the purpose of surface plotting
     reshapedx = sample_x.reshape(2, len(sample_x)//2)
     reshapedy = sample_y.reshape(2, len(sample_y)//2)
@@ -343,3 +347,10 @@ ys2 = np.array([3,4,7,8],dtype=np.double)
 zs2 = np.array([4,7,8,12],dtype=np.double)
 our_v2 = Vandermonde(xs2,ys2, zs2)
 Graph_Bivariate(our_v2, xs2, ys2,zs2)
+
+#Ex/3 9-points (getting spicy)
+xs3 = np.array([1,1,1,2,2,2,3,3,3], dtype=np.double)
+ys3 = np.array([1,2,3,1,2,3,1,2,3], dtype=np.double)
+zs3 = np.array([3.2,4.4,6.5,2.5,4.7,5.8,5.1,3.6,2.9], dtype=np.double)
+our_v3 = Vandermonde(xs3,ys3,zs3)
+Graph_Bivariate(our_v3, xs3, ys3, zs3)
