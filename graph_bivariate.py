@@ -65,7 +65,7 @@ def Graph_Bivariate(vvector: np.array, orig_x: np.array, orig_y:np.array, orig_z
     
     # Create the array of z values based off of constants in vmatrix and original x and y vals
     for index in range(len(sample_x)):
-        calculated_z.append(np.double(Bivariate(vvector, sample_x[index],sample_y[index])))
+        calculated_z.append(np.double(bivariate.Bivariate(vvector, sample_x[index],sample_y[index])))
         
     # convert to correct data type
     calculated_z = np.array(calculated_z, dtype=np.double)
