@@ -2,21 +2,6 @@ import numpy as np
 import vmond as v
 import math
 
-superscript = str.maketrans("0123456789", "⁰¹²³⁴⁵⁶⁷⁸⁹")
-
-def P_vals(i, j):
-    # For Visual purposes.
-    # Output is string version of powers.
-    y_pow = "y" + f'{j}'.translate(superscript)
-    x_pow = "x" + f'{i}'.translate((superscript))
-    if i == 0 and j == 0:
-        return 1
-    elif i == 0:
-        return y_pow
-    elif j == 0:
-        return x_pow
-    return x_pow + y_pow
-
 def powers(i, j):
     # Helper function to match each x & y pair with
     # their corresponding powers.
@@ -89,9 +74,3 @@ def Vandermonde(X, Y, Z):
 
     C = v.Gauss(V, Z)
     return C
-
-
-a = np.array([1, 2, 3, 4], dtype=np.double)
-b = np.array([1, 2, 3, 4], dtype=np.double)
-c = np.array([1, 2, 3, 4], dtype=np.double)
-Vandermonde(a, b, c)
